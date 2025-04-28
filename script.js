@@ -5,7 +5,7 @@
 let videoElement;
 
 /**
- * @description tracks whether there are ads loaded - initially set to false
+ * @description Tracks whether there are ads loaded - initially set to false
  * @default
  * @type {boolean}
  */
@@ -18,37 +18,51 @@ let adsLoaded = false;
 let adContainer;
 
 /**
- * @description This class represents a container for displaying ads. The SDK will automatically create structures inside the containerElement parameter to house video and overlay ads.
+ * @description This class represents a container for displaying ads.
  * @type {object}
  */
 let adDisplayContainer;
 
 /**
- * @description AdsLoader allows clients to request ads from ad servers. To do so, users must register for the AdsManagerLoadedEvent event and then request ads.
+ * @description AdsLoader allows clients to request ads from ad servers.
  * @type {object}
  */
 let adsLoader;
 
 /**
- * @description Provides the outer public API to the publisher and communicates with the inner instance of ads manager.
+ * @description Provides the outer public API to the publisher.
  * @type {object}
  */
 let adsManager;
 
-window.addEventListener("load", ()=> {
+/**
+ * @description Tracks if the video is muted
+ * @type {boolean}
+ */
+let isMuted = false;
+
+window.addEventListener("load", () => {
   videoElement = document.getElementById("video-element");
   videoElement.addEventListener("play", function (event) {
     loadAds(event);
   });
 
-  /**
-   * The playbutton sitting under the video element.
-   * @type {HTMLButtonElement}
-   */
   const playButton = document.getElementById("play-button");
   playButton.addEventListener("click", () => {
     videoElement.play();
+    updatePlayPauseButton();
   });
+
+  // Custom control event listeners
+  const playPauseButton = document.getElementById("play-pause-button");
+  const muteButton = document.getElementById("mute-button");
+  const volumeSlider = document.getElementById("volume-slider");
+  const replayButton = document.getElementById("replay-button");
+
+  playPauseButton.addEventListener("click", togglePlayPause);
+  muteButton.addEventListener("click", toggleMute);
+  volumeSlider.addEventListener("input", adjustVolume);
+  replayButton.addEventListener("click", replayVideo);
 
   initializeIMA();
 });
@@ -63,18 +77,56 @@ window.addEventListener("resize", () => {
 });
 
 /**
- * Initializes the the IMA API.
- *
- * - Adds click event for the ad-container
- * - Instantiates the IMA AdDisplayContainer class
- * - Instantiates the IMA AdsLoader class
- *   - Adds Eventlistener for "onloaded" and "error" to adsloader
- * - Instantiates the IMA Adsrequest and
- *   requests an ad with the given url
- * - Loads the Ad with the adsloader object
- *
- * @returns {void}
+ * Toggles play/pause state and updates button icon
  */
+function togglePlayPause() {
+  if (videoElement.paused) {
+    videoElement.play();
+  } else {
+    videoElement.pause();
+  }
+  updatePlayPauseButton();
+}
+
+/**
+ * Updates the play/pause button icon
+ */
+function updatePlayPauseButton() {
+  const playPauseButton = document.getElementById("play-pause-button");
+  playPauseButton.textContent = videoElement.paused ? "▶️" : "⏸️";
+}
+
+/**
+ * Toggles mute state and updates button icon
+ */
+function toggleMute() {
+  isMuted = !isMuted;
+  videoElement.muted = isMuted;
+  const muteButton = document.getElementById("mute-button");
+  muteButton.textContent = isMuted ? "🔇" : "🔊";
+}
+
+/**
+ * Adjusts volume based on slider input
+ */
+function adjustVolume() {
+  const volumeSlider = document.getElementById("volume-slider");
+  videoElement.volume = volumeSlider.value;
+  videoElement.muted = volumeSlider.value == 0;
+  isMuted = videoElement.muted;
+  const muteButton = document.getElementById("mute-button");
+  muteButton.textContent = isMuted ? "🔇" : "🔊";
+}
+
+/**
+ * Replays the video from the beginning
+ */
+function replayVideo() {
+  videoElement.currentTime = 0;
+  videoElement.play();
+  updatePlayPauseButton();
+}
+
 function initializeIMA() {
   console.log("initializing IMA");
 
@@ -82,10 +134,7 @@ function initializeIMA() {
 
   adContainer.addEventListener("click", adContainerClick);
 
-  adDisplayContainer = new google.ima.AdDisplayContainer(
-    adContainer,
-    videoElement
-  );
+  adDisplayContainer = new google.ima.AdDisplayContainer(adContainer, videoElement);
 
   adsLoader = new google.ima.AdsLoader(adDisplayContainer);
 
@@ -100,16 +149,12 @@ function initializeIMA() {
     false
   );
 
-  // Let the AdsLoader know when the video has ended
   videoElement.addEventListener("ended", function () {
-    adsLoader.contentComplete();
+    if (adsLoader) {
+      adsLoader.contentComplete();
+    }
   });
 
-  /**
-   * @description A class for specifying properties of the ad request.
-   * @type {object}
-   * @constant
-   */
   const adsRequest = new google.ima.AdsRequest();
   adsRequest.adTagUrl =
     "https://pubads.g.doubleclick.net/gampad/ads?" +
@@ -124,39 +169,30 @@ function initializeIMA() {
     "&env=vp" +
     "&unviewed_position_start=1" +
     "&impl=s" +
-    "&correlator=";
+    "&correlator=" + Date.now();
 
-  // Specify the linear and nonlinear slot sizes. This helps the SDK to
-  // select the correct creative if multiple are returned.
   adsRequest.linearAdSlotWidth = videoElement.clientWidth;
   adsRequest.linearAdSlotHeight = videoElement.clientHeight;
   adsRequest.nonLinearAdSlotWidth = videoElement.clientWidth;
   adsRequest.nonLinearAdSlotHeight = videoElement.clientHeight / 3;
 
-  // Pass the request to the adsLoader to request ads
   adsLoader.requestAds(adsRequest);
 }
 
-/**
- * Callback to Clicks
- *
- * Toggles play and pause on the videoElement
- *
- * @param {InputEvent} event
- *
- * @returns {void}
- */
 function adContainerClick(event) {
+  if (adsManager && adsManager.getCurrentAd()) {
+    return; // Let IMA handle ad clicks
+  }
   console.log("ad container clicked");
   if (videoElement.paused) {
     videoElement.play();
   } else {
     videoElement.pause();
   }
+  updatePlayPauseButton();
 }
 
 function onAdsManagerLoaded(adsManagerLoadedEvent) {
-  // Instantiate the AdsManager from the adsLoader response and pass it the video element
   adsManager = adsManagerLoadedEvent.getAdsManager(videoElement);
   adsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError);
   adsManager.addEventListener(
@@ -167,7 +203,6 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
     google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
     onContentResumeRequested
   );
-
   adsManager.addEventListener(google.ima.AdEvent.Type.LOADED, onAdLoaded);
 }
 
@@ -175,37 +210,39 @@ function onAdLoaded(adEvent) {
   var ad = adEvent.getAd();
   if (!ad.isLinear()) {
     videoElement.play();
+    updatePlayPauseButton();
   }
 }
+
 function onContentPauseRequested() {
   videoElement.pause();
+  updatePlayPauseButton();
 }
 
 function onContentResumeRequested() {
   videoElement.play();
+  updatePlayPauseButton();
 }
 
 function onAdError(adErrorEvent) {
-  // Handle the error logging.
   console.log(adErrorEvent.getError());
   if (adsManager) {
     adsManager.destroy();
   }
+  videoElement.play();
+  updatePlayPauseButton();
 }
 
 function loadAds(event) {
-  // Prevent this function from running on if there are already ads loaded
   if (adsLoaded) {
     return;
   }
   adsLoaded = true;
 
-  // Prevent triggering immediate playback when ads are loading
   event.preventDefault();
 
   console.log("loading ads");
 
-  // Initialize the container. Must be done via a user action on mobile devices.
   videoElement.load();
   adDisplayContainer.initialize();
 
@@ -215,8 +252,8 @@ function loadAds(event) {
     adsManager.init(width, height, google.ima.ViewMode.NORMAL);
     adsManager.start();
   } catch (adError) {
-    // Play the video without ads, if an error occurs
     console.log("AdsManager could not be started");
     videoElement.play();
+    updatePlayPauseButton();
   }
 }

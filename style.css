@@ -8,7 +8,7 @@
 body {
   background-color: #1a1a1a; /* Dark background for modern look */
   color: #ffffff; /* White text for contrast */
-  font-family: 'Arial', sans-serif;
+  font-family: 'Montserrat', sans-serif; /* Custom font */
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -61,6 +61,40 @@ body {
   z-index: 10; /* Ensure ads appear above video */
 }
 
+#video-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+#video-controls button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+#video-controls button:hover {
+  color: #ff007a; /* Match gradient theme */
+}
+
+#volume-slider {
+  width: 100px;
+  accent-color: #ff007a; /* Match gradient theme */
+  cursor: pointer;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  background: #ff007a;
+  border-radius: 50%;
+}
+
 #play-button {
   display: block;
   margin: 20px auto; /* Center button */
@@ -94,5 +128,14 @@ body {
   #play-button {
     padding: 10px 20px;
     font-size: 16px;
+  }
+
+  #video-controls {
+    gap: 5px;
+    padding: 8px;
+  }
+
+  #volume-slider {
+    width: 80px;
   }
 }
