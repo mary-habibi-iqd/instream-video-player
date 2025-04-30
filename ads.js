@@ -157,6 +157,7 @@ function initializeIMA() {
 
     const adsRequest = new google.ima.AdsRequest();
 
+
     adsRequest.adTagUrl =
         "https://pubads.g.doubleclick.net/gampad/ads?" +
         "iu=/183/iqd_videoplayer/videoplayer" +
@@ -170,7 +171,11 @@ function initializeIMA() {
         "&env=vp" +
         "&unviewed_position_start=1" +
         "&impl=s" +
+        "&vid_d=115000" +
+        "&allcues=5000" +
         "&correlator=" + Date.now();
+
+
 
 
     console.log("adTagUrl: ", adsRequest.adTagUrl);
@@ -183,6 +188,7 @@ function initializeIMA() {
     adsRequest.nonLinearAdSlotHeight = videoElement.clientHeight / 3;
 
     adsLoader.requestAds(adsRequest);
+
 }
 
 function adContainerClick(event) {
