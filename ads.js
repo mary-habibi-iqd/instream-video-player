@@ -39,7 +39,7 @@ let adsManager;
  * @description Tracks if the video is muted
  * @type {boolean}
  */
-let isMuted = false;
+let isMuted = true;
 
 window.addEventListener("load", () => {
     videoElement = document.getElementById("video-element");
@@ -50,6 +50,7 @@ window.addEventListener("load", () => {
     const playButton = document.getElementById("play-button");
     playButton.addEventListener("click", () => {
         videoElement.play();
+        videoElement.muted = true;
         updatePlayPauseButton();
     });
 
