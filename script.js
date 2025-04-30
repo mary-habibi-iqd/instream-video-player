@@ -173,7 +173,8 @@ function initializeIMA() {
         "&unviewed_position_start=1" +
         "&impl=s" +
         "&correlator=" + Date.now();
-    console.log("ad tag: ", adsRequest.adTagUrl);
+
+    console.log("adTagUrl: ", adsRequest.adTagUrl);
 
 
 
