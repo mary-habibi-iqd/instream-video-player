@@ -165,7 +165,6 @@ function initializeIMA() {
         "&cust_params=kw%3Dmary_testplayer" +
         "&ad_rule=1" +
         "&tfcd=0" +
-        "&pos=pre" +
         "&npa=0" +
         "&sz=16x9%7C480x360%7C640x360%7C640x480" +
         "&gdfp_req=1" +
