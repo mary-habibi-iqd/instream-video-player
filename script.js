@@ -164,7 +164,6 @@ function initializeIMA() {
         "&description_url=" + encodeURIComponent(window.location.href) +
         "&cust_params=kw%3Dmary_testplayer" +
         "&ad_rule=1" +
-        "&tfcd=0" +
         "&npa=0" +
         "&sz=16x9%7C480x360%7C640x360%7C640x480" +
         "&gdfp_req=1" +
@@ -173,6 +172,7 @@ function initializeIMA() {
         "&unviewed_position_start=1" +
         "&impl=s" +
         "&correlator=" + Date.now();
+
 
     console.log("adTagUrl: ", adsRequest.adTagUrl);
 
