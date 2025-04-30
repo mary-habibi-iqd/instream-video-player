@@ -156,20 +156,27 @@ function initializeIMA() {
   });
 
   const adsRequest = new google.ima.AdsRequest();
+  //adsRequest.adTagUrl = `https://pubads.g.doubleclick.net/gampad/ads?iu=/183/iqd_videoplayer/videoplayer&description_url=${encodeURIComponent(window.location.href)}&cust_params=kw%3Dmary_testplayer&ad_rule=0&tfcd=0&pmad=2&pos=pre&npa=0&sz=16x9%7C480x360%7C640x360%7C640x480&gdfp_req=1&output=vast&env=vp&unviewed_position_start=1&impl=s&correlator=${Date.now()}`;
+
   adsRequest.adTagUrl =
-    "https://pubads.g.doubleclick.net/gampad/ads?" +
-    "iu=/183/ariva/videoplayer" +
-    "&description_url=http%3A%2F%2Fwww.google.de" +
-    "&cust_params=kw%3Dtest_mary_ulf" +
-    "&tfcd=0" +
-    "&npa=0" +
-    "&sz=16x9%7C480x360%7C640x360%7C640x480" +
-    "&gdfp_req=1" +
-    "&output=vast" +
-    "&env=vp" +
-    "&unviewed_position_start=1" +
-    "&impl=s" +
-    "&correlator=" + Date.now();
+  "https://pubads.g.doubleclick.net/gampad/ads?" +
+  "iu=/183/iqd_videoplayer/videoplayer" +
+  "&description_url=" + encodeURIComponent(window.location.href) +
+  "&cust_params=kw%3Dmary_testplayer" +
+  "&ad_rule=1" +
+  "&tfcd=0" +
+  "&pmad=2" +
+  "&pos=pre" +
+  "&npa=0" +
+  "&sz=16x9%7C480x360%7C640x360%7C640x480" +
+  "&gdfp_req=1" +
+  "&output=vast" +
+  "&env=vp" +
+  "&unviewed_position_start=1" +
+  "&impl=s" +
+  "&correlator=" + Date.now();
+
+
 
   adsRequest.linearAdSlotWidth = videoElement.clientWidth;
   adsRequest.linearAdSlotHeight = videoElement.clientHeight;
