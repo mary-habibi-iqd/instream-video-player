@@ -1,5 +1,8 @@
 # 🎬 VideoPlayer Test
 
+![GitHub last commit](https://img.shields.io/github/last-commit/mary-habibi-iqd/videoplayer-test)
+![GitHub deployments](https://img.shields.io/github/deployments/mary-habibi-iqd/videoplayer-test/github-pages)
+
 A modern, responsive video player built with vanilla JavaScript, styled with CSS, bundled using Webpack — and deployed on GitHub Pages.
 
 > Includes ad integration using the IMA SDK from Google.
@@ -31,6 +34,12 @@ A modern, responsive video player built with vanilla JavaScript, styled with CSS
 - JavaScript (ES6)
 - [Webpack](https://webpack.js.org/)
 - [Google IMA SDK](https://developers.google.com/interactive-media-ads)
+
+---
+
+## 🖼️ Screenshots
+
+<img width="800" alt="Video Player Screenshot" src="https://github.com/user-attachments/assets/ab163ca9-5ca3-4377-ac46-0bffbbc34dd3" />
 
 ---
 
