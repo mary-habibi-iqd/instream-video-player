@@ -1,0 +1,29 @@
+{
+  "name": "test-videoplayer",
+  "version": "1.0.0",
+  "description": "videoplayr",
+  "main": "ads.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "serve": "webpack serve --mode development",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+  "type": "git",
+  "url": "git+https://github.com/mary-habibi-iqd/videoplayer-test.git"
+},
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://mary-habibi-iqd.github.io/videoplayer-test/",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "gh-pages": "^6.3.0",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  }
+}
