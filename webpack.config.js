@@ -20,6 +20,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Digital Clock',
             template: 'src/index.html',
+            favicon: 'src/favicon.ico',
         }),
     ],
 };
