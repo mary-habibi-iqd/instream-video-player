@@ -1,4 +1,4 @@
-# 🎬 VideoPlayer Test
+# 🎬 Instream Video Player
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/mary-habibi-iqd/videoplayer-test)
 ![GitHub deployments](https://img.shields.io/github/deployments/mary-habibi-iqd/videoplayer-test/github-pages)
@@ -58,3 +58,15 @@ npm run serve
 
 # 4. Build for production
 npm run build
+```
+---
+
+## 🧑‍💻 Author
+
+Made with ❤️ by [Mary Habibi](https://github.com/mary-habibi-iqd)
+
+---
+
+## 📄 License
+
+[MIT](LICENSE)
