@@ -39,7 +39,7 @@ A modern, responsive video player built with vanilla JavaScript, styled with CSS
 
 ## 🖼️ Screenshots
 
-<img width="800" alt="Video Player Screenshot" src="https://github.com/user-attachments/assets/ab163ca9-5ca3-4377-ac46-0bffbbc34dd3" />
+<img width="800" alt="Video Player Screenshot" src="https://github.com/user-attachments/assets/e934285b-52b6-43bb-be36-134980b0f0b2" />
 
 ---
 
