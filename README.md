@@ -11,7 +11,7 @@ A modern, responsive video player built with vanilla JavaScript, styled with CSS
 
 ## 🔗 Live Demo
 
-👉 [View Live on GitHub Pages](https://mary-habibi-iqd.github.io/videoplayer-test/)
+👉 [View Live on GitHub Pages](https://mary-habibi-iqd.github.io/instream-video-player/)
 
 ---
 
