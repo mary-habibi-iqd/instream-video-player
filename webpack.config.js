@@ -23,4 +23,15 @@ module.exports = {
             favicon: 'src/favicon.ico',
         }),
     ],
+
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, 'dist'),
+        },
+        compress: true,
+        port: 8080,
+        open: true,
+        hot: true,
+        historyApiFallback: true,
+    },
 };
