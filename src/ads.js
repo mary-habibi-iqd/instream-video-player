@@ -173,7 +173,7 @@ function initializeIMA() {
         "&unviewed_position_start=1" +
         "&impl=s" +
         "&vid_d=115000" +
-        "&allcues=5000" +
+        "&allcues=5000,8000,12000" +
         "&correlator=" + Date.now();
 
 
